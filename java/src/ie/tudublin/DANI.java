@@ -27,6 +27,7 @@ public class DANI extends PApplet {
        
 	}
 
+	//press space to regenerate sonnet
 	public void keyPressed() {
 		if (key == ' ') {
 			writeSonnet();
@@ -46,7 +47,6 @@ public class DANI extends PApplet {
 				words[j] = words[j].replaceAll("[^\\ww\\s]", "");
 				words[j] = words[j].toLowerCase();
 
-
 				int result = findWord(words[j]);
 				Word word;
 				//if word is not in model, add it
@@ -55,6 +55,7 @@ public class DANI extends PApplet {
 					word = new Word(words[j]);
 					model.add(word);
 				}
+				//otherwise make word point at the word in model
 				else
 				{
 					word = model.get(result);
