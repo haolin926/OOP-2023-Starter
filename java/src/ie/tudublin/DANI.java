@@ -7,6 +7,8 @@ import processing.core.PApplet;
 public class DANI extends PApplet {
 
 	ArrayList<Word> model;
+	ArrayList<String> sonnect;
+	StringBuilder sb;
 
 	public void settings() {
 		size(1000, 1000);
@@ -107,7 +109,25 @@ public class DANI extends PApplet {
 			System.out.println(w.toString());
 		}
 	}
+	public void Sonnet()
+	{
+		for (int i = 0; i < 14; i++)
+		{
+			int r = (int) random(0, model.size());
+			Word w = model.get(r);
+			//use a string builder to build the sonnet
+			sb = new StringBuilder();
+			sb.append(w.getWord() + " ");
 
+			for(int k = 0; k < 8;k++)
+			{
+				int r2 = (int) random(0, w.getFollows().size());
+				Follow f = w.getFollows().get(r2);
+				sb.append(f.getWord() + " ");
+				w = model.get(findWord(f.getWord()));
+			}
+		}
+	}
 
 	float off = 0;
 
