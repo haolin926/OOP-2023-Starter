@@ -28,7 +28,9 @@ public class DANI extends PApplet {
 	}
 
 	public void keyPressed() {
-
+		if (key == ' ') {
+			writeSonnet();
+		}
 	}
 	public void loadFile()
 	{
@@ -119,7 +121,8 @@ public class DANI extends PApplet {
 			sb = new StringBuilder();
 			sb.append(w.getWord() + " ");
 
-			for(int k = 0; k < 8;k++)
+			//loop only iterate maximum of 7 times because already have 1 word
+			for(int k = 0; k < 7;k++)
 			{
 				int r2;
 				//if current word has no follows, break the loop and stop sentence.
@@ -127,6 +130,7 @@ public class DANI extends PApplet {
 				{
 					break;
 				}
+				//otherwise, get a random follow from the arraylist of follows
 				else
 				{
 					r2 = (int) random(0, w.getFollows().size());
