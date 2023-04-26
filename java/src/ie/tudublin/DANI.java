@@ -32,7 +32,7 @@ public class DANI extends PApplet {
 	}
 	public void loadFile()
 	{
-		String[] line = loadStrings("small.txt");
+		String[] line = loadStrings("shakespere.txt");
 		for(int i = 0; i < line.length; i ++)
 		{
 			String[] words = split(line[i], " ");
@@ -160,6 +160,11 @@ public class DANI extends PApplet {
 		noStroke();
 		textSize(20);
         textAlign(CENTER, CENTER);
+		int gap = 50;
+		for(int i = 0;i<sonnet.length;i++)
+		{
+			text(sonnet[i], width/2, gap + i * gap);
+		}
         
 	}
 }
