@@ -29,6 +29,8 @@ public class Word {
         f.setCount(f.getCount()+1);
     }
 
+    //find index of a follow in the arraylist
+    //if not find, return -1
     public int findFollow(String word)
     {
         for(Follow f:follows)

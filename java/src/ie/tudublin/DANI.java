@@ -35,32 +35,17 @@ public class DANI extends PApplet {
 	public void loadFile()
 	{
 		String[] line = loadStrings("shakespere.txt");
+
 		for(int i = 0; i < line.length; i ++)
 		{
+			//split the line into array of words
 			String[] words = split(line[i], " ");
 			for(int j = 0; j < words.length; j ++)
 			{
-				//get a word from line and create a word object, add it to model
-				//then get the next word and create a follow object, add it to the arraylist of follows in the word object
-				words[j] = words[j].replaceAll("[^a-zA-Z ]", "");
+				//remove punctuation and convert word to lower case
+				words[j] = words[j].replaceAll("[^\\ww\\s]", "");
 				words[j] = words[j].toLowerCase();
 
-				//check if next word exist or not
-				boolean lastWord;
-				if(j+1 == words.length)
-				{
-					lastWord = true;
-				}
-				else
-				{
-					lastWord = false;
-				}
-				
-				if(!lastWord)
-				{
-					words[j+1] = words[j+1].replaceAll("[^a-zA-Z ]", "");
-					words[j+1] = words[j+1].toLowerCase();
-				}
 
 				int result = findWord(words[j]);
 				Word word;
@@ -75,23 +60,47 @@ public class DANI extends PApplet {
 					word = model.get(result);
 				}
 
-				//check if follow for the word exist.
+				//check if next word exist or not
+				boolean lastWord;
+
+				if(j+1 == words.length)
+				{
+					lastWord = true;
+				}
+				else
+				{
+					lastWord = false;
+				}
+				
+				//if next word exist, remove punctuation for it and convert to lower case
 				if(!lastWord)
 				{
+					words[j+1] = words[j+1].replaceAll("[^a-zA-Z ]", "");
+					words[j+1] = words[j+1].toLowerCase();
+
+					//check is the next word is already in the follow list
 					if(word.findFollow(words[j+1]) == -1)
 					{
 						word.addFollow(new Follow(words[j+1], 1));
 					}
+
+					//if it is, increase the follow count
+					//findFollow method return the index of the follow in the arraylist
+					//then get the follow object from the arraylist Follows using the index
+					//then increase the count of the follow object
 					else
 					{
-						word.addFollowCount(word.getFollows().get(word.findFollow(words[j+1])));
+						int index = word.findFollow(words[j+1]);
+						word.addFollowCount(word.getFollows().get(index));
 					}
 				}
+
 			}
 		}
 	}
 	public int findWord(String word)
 	{
+		//return index of word in model if it exist, otherwise return -1 indicating word is not in model
 		for(int i = 0; i < model.size(); i ++)
 		{
 			if(model.get(i).getWord().equals(word))
@@ -167,7 +176,7 @@ public class DANI extends PApplet {
 		int gap = 50;
 		for(int i = 0;i<sonnet.length;i++)
 		{
-			text(sonnet[i], width/2, gap + i * gap);
+			text(sonnet[i], width/2, 100 + i * gap);
 		}
         
 	}
