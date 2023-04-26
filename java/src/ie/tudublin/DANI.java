@@ -17,16 +17,13 @@ public class DANI extends PApplet {
 
     String[] sonnet;
 
-    public String[] writeSonnet()
-    {
-        return null;
-    }
-
 	public void setup() {
 		colorMode(HSB);
 		model = new ArrayList<Word>();
 		loadFile();
 		printModel();
+		writeSonnet();
+		printSonnet();
        
 	}
 
@@ -46,6 +43,7 @@ public class DANI extends PApplet {
 				words[j] = words[j].replaceAll("[^a-zA-Z ]", "");
 				words[j] = words[j].toLowerCase();
 
+				//check if next word exist or not
 				boolean lastWord;
 				if(j+1 == words.length)
 				{
@@ -109,23 +107,47 @@ public class DANI extends PApplet {
 			System.out.println(w.toString());
 		}
 	}
-	public void Sonnet()
+	public void writeSonnet()
 	{
+		sonnet = new String[14];
+		//loop 14 times to create 14 lines
 		for (int i = 0; i < 14; i++)
 		{
 			int r = (int) random(0, model.size());
 			Word w = model.get(r);
-			//use a string builder to build the sonnet
+			//use a string builder to build the sonnet line
 			sb = new StringBuilder();
 			sb.append(w.getWord() + " ");
 
 			for(int k = 0; k < 8;k++)
 			{
-				int r2 = (int) random(0, w.getFollows().size());
+				int r2;
+				//if current word has no follows, break the loop and stop sentence.
+				if(w.getFollows().size() == 0)
+				{
+					break;
+				}
+				else
+				{
+					r2 = (int) random(0, w.getFollows().size());
+				}
+				
+				//append the follow to the string builder
+				//set the follow as next word by looking the string of follow in the model to find the word object for this string
 				Follow f = w.getFollows().get(r2);
 				sb.append(f.getWord() + " ");
 				w = model.get(findWord(f.getWord()));
+
 			}
+			String s = sb.toString();
+			sonnet[i] = s;
+		}
+	}
+	public void printSonnet()
+	{
+		for(String s:sonnet)
+		{
+			System.out.println(s);
 		}
 	}
 
